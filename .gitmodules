@@ -1,0 +1,3 @@
+[submodule ".submodules/convertio-php"]
+	path = .submodules/convertio-php
+	url = https://github.com/Convertio/convertio-php.git

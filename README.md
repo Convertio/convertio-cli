@@ -23,7 +23,7 @@ The preferred mode is to install precompiled binary by executing these tiny comm
 
 If you want to compile from source, then make sure you have set `phar.readonly = Off` in your php.ini, then clone this repository and execute `compile.php` as follows:
 ```
-  $ git clone https://github.com/convertio/convertio-cli.git
+  $ git clone --recursive https://github.com/convertio/convertio-cli.git
   $ cd convertio-cli
   $ php compile.php
   $ sudo mv release/convertio /usr/local/bin/convertio

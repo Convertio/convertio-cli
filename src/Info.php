@@ -4,7 +4,7 @@ namespace ConvertioCLI;
 
 class Info
 {
-    static private $version = 0.1;
+    static private $version = 0.2;
 
     private function printSystemMessage($msg)
     {

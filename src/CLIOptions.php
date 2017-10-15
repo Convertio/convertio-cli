@@ -5,34 +5,15 @@ namespace ConvertioCLI;
 class CLIOptions
 {
     private $raw_argv;
-    public $args;
-    public $free_values;
-    public $input_files = array();
+    private $args;
+    private $input_files = array();
 
     public function __construct($argv)
     {
         $this->raw_argv = $argv;
-        $this->args = array();
-        $C = count($argv);
-        for ($I = 1; $I < $C; $I++) {
-            $V = $argv[$I];
-            if (preg_match("~-(\w+)~", $V, $P)) {
-                if (isset($argv[$I+1])) {
-                    if (preg_match("~-(\w+)~", $argv[$I+1])) {
-                        $this->args[$P[1]] = true;
-                    } else {
-                        $this->args[$P[1]] = $argv[$I+1];
-                        $I++;
-                    }
-                } else {
-                    $this->args[$P[1]] = true;
-                }
-            } else {
-                $this->free_values[] = $V;
-            }
-        }
+        $this->args = getopt('f:o:Vh', ['format:', 'outputdir:', 'version', 'help', 'apikey:']);
 
-        $this->fillInputFiles();
+        $this->fillInputFiles(array_slice($argv, 1));
     }
 
     public function isShowHelp()
@@ -53,22 +34,30 @@ class CLIOptions
         );
     }
 
-    private function fillInputFiles()
+    private function fillInputFiles($argv)
     {
-        if (count($this->free_values) == 0) {
+        $fileArguments = $this->getFileArguments($argv);
+
+        if (count($fileArguments) === 0)
             return;
-        }
 
-        $this->input_files = array();
-        foreach ($this->free_values as $FN) {
-            if (substr($FN, 0, 1) !== '/') {
-                $FN = getcwd()."/".$FN;
+        foreach ($fileArguments as $fileArgument) {
+            if ($fileArgument[0] !== DIRECTORY_SEPARATOR) {
+                $fileArgument = getcwd() . DIRECTORY_SEPARATOR . $fileArgument;
             }
 
-            if (file_exists($FN) && is_readable($FN)) {
-                $this->input_files[] = $FN;
+            if (!is_dir($fileArgument) && is_readable($fileArgument)) {
+                $this->input_files[] = $fileArgument;
             }
         }
+    }
+
+    private function getFileArguments($argv)
+    {
+        return array_filter($argv, function ($argument) {
+            $argument = trim($argument, '-');
+            return !in_array($argument, array_keys($this->args)) && !in_array($argument, $this->args);
+        });
     }
 
     public function getAPIKey()
@@ -83,11 +72,11 @@ class CLIOptions
     public function getOutputDir()
     {
         if (isset($this->args['o'])) {
-            return $this->args['o'];
+            return rtrim($this->args['o'], DIRECTORY_SEPARATOR);
         }
 
         if (isset($this->args['outputdir'])) {
-            return $this->args['outputdir'];
+            return rtrim($this->args['outputdir'], DIRECTORY_SEPARATOR);
         }
 
         return getcwd();
@@ -103,5 +92,10 @@ class CLIOptions
             return $this->args['format'];
         }
         return '';
+    }
+
+    public function getInputFiles()
+    {
+        return $this->input_files;
     }
 }

@@ -11,7 +11,7 @@ class FilesOutput extends CLIOutput
         parent::__construct();
 
         foreach ($Files as $FN) {
-            $this->FilesOutput[$FN] = "Waiting... ";
+            $this->FilesOutput[$FN] = 'Waiting... ';
         }
     }
 
@@ -30,7 +30,7 @@ class FilesOutput extends CLIOutput
     {
         $OutLines = array();
         foreach ($this->FilesOutput as $FN => $St) {
-            $OutLines[] = $FN.": ".$St;
+            $OutLines[] = $FN . ': ' . $St;
         }
 
         return $OutLines;
@@ -38,7 +38,7 @@ class FilesOutput extends CLIOutput
 
     public function fileError($FN, $Message)
     {
-        $this->updateFileStatus($FN, "Error: ".$Message);
+        $this->updateFileStatus($FN, 'Error: ' . $Message);
     }
 
     public function updateFileStep($FN, $Step, $StepPercent = 0)
@@ -48,7 +48,7 @@ class FilesOutput extends CLIOutput
         } elseif ($Step == 'wait') {
             $this->updateFileStatus($FN, 'Waiting in queue... ');
         } elseif ($Step == 'upload') {
-            $this->updateFileStatus($FN, 'Uploading ['.$StepPercent.'%]... ');
+            $this->updateFileStatus($FN, 'Uploading [' . $StepPercent . '%]... ');
         } elseif ($Step == 'convert') {
             $this->updateFileStatus($FN, 'Converting... ');
         } elseif ($Step == 'finish') {

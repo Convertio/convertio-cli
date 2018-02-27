@@ -38,8 +38,9 @@ class CLIOptions
     {
         $fileArguments = $this->getFileArguments($argv);
 
-        if (count($fileArguments) === 0)
+        if (count($fileArguments) === 0) {
             return;
+        }
 
         foreach ($fileArguments as $fileArgument) {
             if ($fileArgument[0] !== DIRECTORY_SEPARATOR) {

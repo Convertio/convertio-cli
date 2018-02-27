@@ -13,13 +13,13 @@ class Info
 
     public static function printVersion()
     {
-        echo self::printSystemMessage("Convertio (cli) v.". self::$version);
+        echo self::printSystemMessage('Convertio (cli) v.' . self::$version);
         die();
     }
 
     public static function printError($St)
     {
-        echo self::printSystemMessage("Error: " . "\n" . $St);
+        echo self::printSystemMessage('Error: ' . "\n" . $St);
         die();
     }
 

@@ -65,19 +65,19 @@ while (count($APIs) > 0) {
             $FO->updateFileStep($FN, $API->step, $API->step_percent);
 
             if ($API->step == 'finish') {
-                $FO->updateFileStatus($FN, 'Done! ['.$API->result_size.' Bytes]');
+                $FO->updateFileStatus($FN, 'Done! [' . $API->result_size . ' Bytes]');
 
-                $OutFN = $OutDir."/".basename($FN).".".strtolower($OutFormat);
+                $OutFN = $OutDir . "/" . basename($FN) . "." . strtolower($OutFormat);
                 $API->download($OutFN);
                 $API->delete();
 
-                $FO->updateFileStatus($FN, 'Done! => '.$OutFN.' ['.$API->result_size.' Bytes]');
+                $FO->updateFileStatus($FN, 'Done! => ' . $OutFN . ' [' . $API->result_size . ' Bytes]');
 
                 unset($APIs[$FN]);
             }
         } catch (\Exception $e) {
             if (!empty($API->result_public_url)) {
-                $FO->fileError($FN, $e->getMessage()." [Try download it manually: ".$API->result_public_url."]");
+                $FO->fileError($FN, $e->getMessage() . " [Try download it manually: " . $API->result_public_url . "]");
             } else {
                 $FO->fileError($FN, $e->getMessage());
             }

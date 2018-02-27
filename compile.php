@@ -1,7 +1,7 @@
 <?php
 
 $FN = "release/convertio";
-$PharFN = $FN.".phar";
+$PharFN = $FN . ".phar";
 
 if (file_exists($FN)) {
     unlink($FN);
@@ -24,7 +24,7 @@ $phar = new Phar(
 $phar->startBuffering();
 $defaultStub = $phar->createDefaultStub('cli.php');
 $phar->buildFromDirectory(".", '~\.php$~');
-$phar->setStub("#!/usr/bin/env php \n".$defaultStub);
+$phar->setStub("#!/usr/bin/env php \n" . $defaultStub);
 $phar->compressFiles(Phar::GZ);
 $phar->stopBuffering();
 

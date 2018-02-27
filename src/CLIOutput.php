@@ -36,7 +36,7 @@ class CLIOutput
         if ($N <= 0) {
             return;
         }
-      
+
         $this->clearLine();
         for ($I = 1; $I < $N; $I++) {
             $this->lineUp();
@@ -46,7 +46,7 @@ class CLIOutput
 
     private function lineStart()
     {
-        $this->printString(chr(27)."[0G"); // 0 Column
+        $this->printString(chr(27) . "[0G"); // 0 Column
     }
 
     private function lineUp()

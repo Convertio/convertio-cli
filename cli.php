@@ -5,10 +5,11 @@ if (PHP_SAPI != 'cli') {
 }
 
 require_once "autoload.php";
-use \Convertio\Convertio;
-use \ConvertioCLI\Info;
-use \ConvertioCLI\CLIOptions;
-use \ConvertioCLI\FilesOutput;
+
+use Convertio\Convertio;
+use ConvertioCLI\CLIOptions;
+use ConvertioCLI\FilesOutput;
+use ConvertioCLI\Info;
 
 $CLIOptions = new CLIOptions($argv);
 
@@ -23,7 +24,7 @@ if ($CLIOptions->isShowVersion()) {
 $APIKey = $CLIOptions->getAPIKey();
 $OutFormat = $CLIOptions->getOutputFormat();
 $OutDir = $CLIOptions->getOutputDir();
-$Files = $CLIOptions->input_files;
+$Files = $CLIOptions->getInputFiles();
 
 if (empty($APIKey)) {
     Info::printError("No API Key provided");

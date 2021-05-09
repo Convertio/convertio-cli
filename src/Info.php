@@ -6,7 +6,7 @@ class Info
 {
     static private $version = 0.3;
 
-    private function printSystemMessage($msg)
+    public static function printSystemMessage($msg)
     {
         return "\n" . $msg . "\n";
     }
